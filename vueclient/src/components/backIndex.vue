@@ -48,6 +48,10 @@
 			 <i class="fa fa-book" aria-hidden="true"></i>
 			<span>课程管理</span>
 		</li>
+    	<li>
+			 <i class="fa fa-book" aria-hidden="true"></i>
+			<span>课程管理</span>
+		</li>
 		</ul>
 		</div>
 	
