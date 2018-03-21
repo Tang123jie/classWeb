@@ -5,7 +5,7 @@
 				<i class=" fa fa-search" aria-hidden="true"></i>
 				<input  @focus="focusFn" @blur="blurFn" type="text" name="" id="" value="" placeholder="搜索..." />
 			</div>
-			
+
 			<div class="headler">
 				<div class="more" @click="toggleSlide">
 					<i class="fa fa-bars" aria-hidden="true"></i>
@@ -24,50 +24,80 @@
 					</ul>
 				</div>
 				<img src="../assets/images/logo.jpg" alt="" />
-			</div>	
+			</div>
 		</div>
 
 
 		<!--侧面导航 -->
 		<div class="sidenav_box">
-        <img src="../assets/images/logo03.png" class="logo" alt="" />
-		<ul>
+        <img src="../assets/images/logo1.jpg" class="logo" alt="" />
+		<ul class="sidenav">
         <li class="now">
-			 <i class="fa fa-home" aria-hidden="true"></i>
-			<span>网站首页</span>
+		 <router-link to="/backIndex/indexContent">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        <span>网站首页</span>
+     </router-link>
 		</li>
         <li>
-			 <i class="fa fa-user-o" aria-hidden="true"></i>
-			<span>后台人员</span>
+		 <router-link to="/backIndex/indexContent">
+                          <i class="fa fa-user-o" aria-hidden="true"></i>
+                        <span>后台人员</span>
+    </router-link>
 		</li>
 		<li>
-			  <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-			<span>学员管理</span>
+			  <router-link to="/backIndex/indexContent">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        <span>学员管理</span>
+        </router-link>
 		</li>
 		<li>
-			 <i class="fa fa-book" aria-hidden="true"></i>
-			<span>课程管理</span>
+			  <router-link to="/backIndex/indexContent">
+                         <i class="fa fa-book" aria-hidden="true"></i>
+                        <span>课程管理</span>
+        </router-link>
 		</li>
-    	<li>
-			 <i class="fa fa-book" aria-hidden="true"></i>
-			<span>课程管理</span>
-		</li>
+
 		</ul>
 		</div>
-	
-	
-	
-	</div>	
+  <!--中间内容部分-->
+    <div class="content">
+     <ul class="breadcrumb">
+       <li>
+         <a href="#/backIndex/">首页</a>
+       </li>
+       <li>{{ pageTitle }}</li>
+     </ul>
+     <router-view></router-view>
+
+
+
+
+
+
+    </div>
+
+
+
+	</div>
 </template>
 
 <script>
+var pageTitleObj = {
+  indexContent:"网站首页",
+  adminList:"后台人员",
+  studentList:"学员管理",
+  courseList:"课程管理",
+  courseEdit:"课程编辑"
+}
+
 export default {
   name: "backlogin",
   data() {
     return {
       search_box_fouce: false,
-      showExit: false
-    };
+      showExit: false,
+      pageTitle:pageTitleObj[this.$route.path.substr(this.$route.path.lastIndexOf("/")+1)] || "网站首页"
+    }
   },
   methods: {
     focusFn() {
@@ -83,7 +113,15 @@ export default {
       this.showExit = !this.showExit;
     },
     logout() {}
-  }
+  },
+   watch:{ //监控路径变化  当路径发送变化的时候，改变面包屑导航的显示
+            $route: {
+                handler: function (val, oldVal) {
+                    var path = val.path;
+                    this.pageTitle = pageTitleObj[ path.substr( path.lastIndexOf("/")+1 ) ] || "网站首页";
+                }
+            }
+   }
 };
 </script>
 
@@ -164,18 +202,97 @@ li {
   margin-top: 5px;
   margin-right: 30px;
 }
-.sidenav_box{
-	width: 80px;
-	background:#fff;
-	position: fixed;
-	top:0;
-	left: 0;
-	bottom: 0;
-	z-index: 99;
-	box-shadow:0 1px 5px rgba(13,62,73,0.2);
+.sidenav_box {
+  width: 80px;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  box-shadow: 0 1px 5px rgba(13, 62, 73, 0.2);
 }
-.sidenav_box .logo{
-	width: 46px;
-	margin: 20px 0 0 17px;
+.sidenav_box .logo {
+  width: 50px;
+  margin: 20px 0 0 17px;
+}
+.sidenav {
+  margin-top: 30px;
+}
+.sidenav li {
+  margin-bottom: 20px;
+}
+.sidenav a{
+  position: relative;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  display: block;
+  opacity: 0.6;
+  text-decoration: none;
+  transition: all 0.5s ease;
+   cursor: pointer;
+}
+.sidenav a i{
+  font-size: 20px;
+  line-height: 56px;
+  text-align: center;
+  display: block;
+  color: #566a80;
+}
+.sidenav a:hover {
+  background: #f0f2f5;
+  opacity: 1;
+}
+.sidenav a span {
+  position: absolute;
+  left: 55px;
+  top: 15px;
+  width: 0;
+  padding: 5px 0;
+  font-size: 12px;
+  opacity: 0;
+  border-radius: 3px;
+  background: #000;
+}
+.sidenav a:hover span {
+  opacity: 1;
+  left: 65px;
+  width: 60px;
+  padding: 5px 20px;
+  transition: none 0.5s ease-out;
+  transition-property: opacity, left;
+  color: #fff;
+}
+.sidenav a span::after{
+  content:"";
+  position: absolute;
+  top:8px;
+  left: -10px;
+  border: 5px solid transparent;
+  border-right-color: #000;
+}
+.content{
+  min-height: 300px;
+  min-width: 700px;
+  margin: 20px 30px 0 100px;
+}
+.breadcrumb{
+  border-radius: 4px;
+  background: #fff;
+  padding: 10px 15px;
+}
+.breadcrumb>li{
+  display: inline-block;
+  color: #777777;
+}
+.breadcrumb>li>a{
+  color: #32475f;
+  text-decoration: none;
+}
+.main{
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 10px;
 }
 </style>
