@@ -39,19 +39,19 @@
      </router-link>
 		</li>
         <li>
-		 <router-link to="/backIndex/indexContent">
+		 <router-link to="/backIndex/adminList">
                           <i class="fa fa-user-o" aria-hidden="true"></i>
                         <span>后台人员</span>
     </router-link>
 		</li>
 		<li>
-			  <router-link to="/backIndex/indexContent">
+			  <router-link to="/backIndex/studentList">
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                         <span>学员管理</span>
         </router-link>
 		</li>
 		<li>
-			  <router-link to="/backIndex/indexContent">
+			  <router-link to="/backIndex/courseList">
                          <i class="fa fa-book" aria-hidden="true"></i>
                         <span>课程管理</span>
         </router-link>
@@ -68,12 +68,6 @@
        <li>{{ pageTitle }}</li>
      </ul>
      <router-view></router-view>
-
-
-
-
-
-
     </div>
 
 
@@ -96,7 +90,7 @@ export default {
     return {
       search_box_fouce: false,
       showExit: false,
-      pageTitle:pageTitleObj[this.$route.path.substr(this.$route.path.lastIndexOf("/")+1)] || "网站首页"
+      pageTitle: pageTitleObj[ this.$route.path.substr( this.$route.path.lastIndexOf("/")+1 ) ] || "网站首页"
     }
   },
   methods: {
@@ -118,7 +112,7 @@ export default {
             $route: {
                 handler: function (val, oldVal) {
                     var path = val.path;
-                    this.pageTitle = pageTitleObj[ path.substr( path.lastIndexOf("/")+1 ) ] || "网站首页";
+                    this.pageTitle =  pageTitleObj[ path.substr( path.lastIndexOf("/")+1 ) ] || "网站首页";
                 }
             }
    }
